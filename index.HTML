@@ -15,10 +15,18 @@
         .container {
             text-align: center;
             margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .username {
             font-size: 24px;
             font-weight: bold;
+            margin-bottom: 10px;
         }
         .points {
             font-size: 20px;
@@ -29,23 +37,27 @@
 <body>
     <div class="container">
         <h1>مرحبًا بك في التطبيق!</h1>
-        <div class="username" id="username"></div>
-        <div class="points" id="points"></div>
+        <div class="username" id="username">اسم المستخدم: ...</div>
+        <div class="points" id="points">عدد النقاط: ...</div>
     </div>
 
     <script>
-        // دالة لاستقبال البيانات وعرضها
-        window.onload = function() {
-            // استلام البيانات المرسلة من البوت
-            fetch(window.location.href, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    // عرض اسم المستخدم والنقاط
-                    document.getElementById('username').textContent = "اسم المستخدم: " + data.username;
-                    document.getElementById('points').textContent = "عدد النقاط: " + data.points;
-                })
-                .catch(error => console.error('Error:', error));
+        // دالة لاستخراج البيانات من رابط الصفحة (URL)
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                username: params.get("username") || "غير معروف",
+                points: params.get("points") || "0"
+            };
         }
+
+        // استدعاء الدالة وعرض البيانات في الصفحة
+        window.onload = function() {
+            const data = getQueryParams();
+            document.getElementById('username').textContent = "اسم المستخدم: " + data.username;
+            document.getElementById('points').textContent = "عدد النقاط: " + data.points;
+        };
     </script>
+
 </body>
 </html>
