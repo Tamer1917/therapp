@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات المستخدم</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .username {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .points {
+            font-size: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مرحبًا بك في التطبيق!</h1>
+        <div class="username" id="username"></div>
+        <div class="points" id="points"></div>
+    </div>
+
+    <script>
+        // دالة لاستقبال البيانات وعرضها
+        window.onload = function() {
+            // استلام البيانات المرسلة من البوت
+            fetch(window.location.href, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    // عرض اسم المستخدم والنقاط
+                    document.getElementById('username').textContent = "اسم المستخدم: " + data.username;
+                    document.getElementById('points').textContent = "عدد النقاط: " + data.points;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
